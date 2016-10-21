@@ -1,18 +1,37 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>PHMS</title>
-</head>
-<body>
-	<div>
-		<form method='Post' action='login'>
-			Username : <input type='text' id='user' name='user' placeholder='Username'/>
-			</br>
-			Password : <input type='password' id='password' name='password' placeholder='Password'/>
-			</br>
-			<button type='submit'>Submit</button>
-		</form>
-	</div>
-</body>
+<html ng-app="phmsApp">
+	<head>
+		<meta charset="UTF-8">
+		<title>PHMS</title>
+		<script type="text/javascript" src="js/angular.min1.5.js"></script>
+		<script type="text/javascript" src="controllers/controller.js"></script>
+		<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	</head>
+	<body>
+		<div ng-include="'views/header.html'"></div>
+		<div class="container" ng-controller="loginController">
+			<h3>Login</h3>
+			<form>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="userId">User ID</label> 
+						<input type="input" ng-model = "userId" class="form-control" id="userId" placeholder="User ID" required/>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="password">Password</label> 
+						<input type="password" ng-model = "password" class="form-control" id="password" placeholder="Password" required/>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<button type="submit" class="btn btn-primary" ng-click="login()">Submit</button>
+				</div>
+			</form>
+		</div>
+		<div class="container">
+			<a href="views/createUser.html">Create New User</a>
+		</div>
+	</body>
 </html>

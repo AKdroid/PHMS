@@ -5,12 +5,14 @@ import com.phms.utils.DBConnection;
 
 public class LoginDAO 
 {
-	public boolean validateLogin(LoginBean login) 
+	public String validateLogin(LoginBean login) 
 	{
 		DBConnection connection = DBConnection.getConnection();
-		String query = "SELECT * FROM APP_USERS WHERE USER_ID = " + login.getLoginUser() + "AND PASSWORD = " + login.getPassword();
-		connection.executeQuery(query);
-		return true;
+		String query = "SELECT USER_TYPE FROM APP_USERS WHERE USER_ID = '" 
+					+ login.getLoginUser() + "' AND PASSWORD = '" + login.getPassword() 
+					+ "' AND IS_ACTIVE = 'Active'";
+		String userType = connection.executeLoginQuery(query);
+		return userType;
 	}
 	
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="phmsApp">
+	<head>
+		<meta charset="UTF-8">
+		<title>PHMS</title>
+		<script type="text/javascript" src="../js/angular.min1.5.js"></script>
+		<script type="text/javascript" src="../controllers/controller.js"></script>
+		<link type="text/css" rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link type="text/css" rel="stylesheet" href="../css/bootstrap-theme.min.css" />
+	</head>
+	<body>
+		<div ng-include="'../views/header.html'"></div>
+		<div class="container" ng-controller="createUserController">
+			<h3>New User</h3>
+			<form>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="firstname">First Name</label> 
+						<input type="input" ng-model = "firstname" class="form-control" id="firstname" placeholder="First Name" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="lastname">Last Name</label> 
+						<input type="input" ng-model = "lastname" class="form-control" id="lastname" placeholder="Last Name" required/>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="userId">User ID</label> 
+						<input type="input" ng-model = "userId" class="form-control" id="userId" placeholder="User ID" ng-minlength="3" ng-maxlength="8" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="password">Password</label> 
+						<input type="password" ng-model = "password" class="form-control" id="password" placeholder="Password" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="rep_password">Repeat Password</label> 
+						<input type="password" ng-model = "rep_password" class="form-control" id="rep_password" placeholder="Repeat Password" required/>
+					</div>
+				</div>
+				<span id='error_message'></span>
+				<div class="col-md-12">
+					<button type="submit" class="btn btn-primary" ng-click="createUser()">Create User</button>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>

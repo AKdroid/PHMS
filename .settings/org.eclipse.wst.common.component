@@ -2,6 +2,12 @@
     <wb-module deploy-name="PHMSDev">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="ojdbc6.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/PHMS/lib/ojdbc6.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="json.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/PHMS/lib/json.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <property name="context-root" value="PHMSDev"/>
         <property name="java-output-path" value="/PHMSDev/build/classes"/>
     </wb-module>

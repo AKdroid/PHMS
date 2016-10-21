@@ -34,25 +34,25 @@ public class DBConnection
 		return dbConnection;
 	}
 
-	public void executeQuery(String query) 
+	public String executeLoginQuery(String query) 
 	{
 		Statement stmt;
 		ResultSet rs;
+		String userType = null;
 		try 
 		{
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery(query);
 			while (rs.next()) 
 			{
-			    String s = rs.getString("USER_ID");
-			    String n = rs.getString("PASSWORD");
-			    System.out.println(s + "   " + n);
+				userType = rs.getString("USER_TYPE");
 			}
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
+		return userType;
 	}
 	
 	// open connection

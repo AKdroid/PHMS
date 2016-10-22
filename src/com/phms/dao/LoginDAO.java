@@ -1,5 +1,8 @@
 package com.phms.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 import com.phms.beans.LoginBean;
 import com.phms.utils.DBConnection;
 
@@ -8,11 +11,24 @@ public class LoginDAO
 	public String validateLogin(LoginBean login) 
 	{
 		DBConnection connection = DBConnection.getConnection();
-		String query = "SELECT USER_TYPE FROM APP_USERS WHERE USER_ID = '" 
+		ResultSet rs;
+		String user="";
+		String query = "SELECT USER_ID FROM APP_USERS WHERE USER_ID = '" 
 					+ login.getLoginUser() + "' AND PASSWORD = '" + login.getPassword() 
 					+ "' AND IS_ACTIVE = 'Active'";
-		String userType = connection.executeLoginQuery(query);
-		return userType;
+		rs = connection.executeQuery(query);
+		if(rs == null){
+			return "";
+		}
+		try {
+			while(rs.next()){
+				user = rs.getString("USER_ID");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
 	}
 	
 }

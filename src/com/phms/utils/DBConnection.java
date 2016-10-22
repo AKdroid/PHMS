@@ -34,25 +34,20 @@ public class DBConnection
 		return dbConnection;
 	}
 
-	public String executeLoginQuery(String query) 
+	public ResultSet executeQuery(String query) 
 	{
 		Statement stmt;
-		ResultSet rs;
-		String userType = null;
+		ResultSet rs = null;
 		try 
 		{
 			stmt = connection.createStatement();
 			rs = stmt.executeQuery(query);
-			while (rs.next()) 
-			{
-				userType = rs.getString("USER_TYPE");
-			}
 		} 
 		catch (Exception e) 
 		{
 			e.printStackTrace();
 		}
-		return userType;
+		return rs;
 	}
 	
 	// open connection
@@ -60,4 +55,20 @@ public class DBConnection
 	// close connection
 	
 	// transaction
+	public boolean executeUpdate(String query){
+		boolean result = true;
+		int rs;
+		try {
+			connection.setAutoCommit(false);
+			Statement stmt;
+			stmt = connection.createStatement();
+			rs = stmt.executeUpdate(query);
+			connection.commit();
+			result = rs > 0;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

@@ -1,7 +1,8 @@
 var app = angular.module("phmsApp", []);
 app.controller("loginController", function($scope, $http) {  
     $scope.login = function() {
-    	if($scope.userId !== "" && $scope.password !== "") {
+    	if($scope.userId && $scope.password 
+    		&& $scope.userId !== "" && $scope.password !== "") {
 	        //console.log($scope.userId);
 	        //console.log($scope.password);
 	        $http({
@@ -22,9 +23,11 @@ app.controller("loginController", function($scope, $http) {
 
 app.controller("createUserController", function($scope, $http) {  
     $scope.createUser = function() {
-        console.log($scope.userId);
-        console.log($scope.password);
-        if($scope.firstname !== "" && $scope.lastname !== "" 
+        //console.log($scope.userId);
+        //console.log($scope.password);
+        if($scope.firstname && $scope.lastname && $scope.userId && $scope.password && $scope.dob
+        	&& $scope.gender && $scope.street && $scope.city && $scope.state && $scope.country 
+        	&& $scope.zip && $scope.firstname !== "" && $scope.lastname !== "" 
         	&& $scope.userId !== "" && $scope.password !== "" 
         	&& $scope.password === $scope.rep_password) {
         $http({
@@ -45,5 +48,8 @@ app.controller("createUserController", function($scope, $http) {
 	    else {
 	    	$scope.message = "Password does not match."
 	    }
+    };
+    $scope.isUserTypeSelected = function() {
+    	return ($scope.patient || $scope.healthSupporter);
     };
 });

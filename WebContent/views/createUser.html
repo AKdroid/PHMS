@@ -15,18 +15,6 @@
 			<form>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="firstname">First Name</label> 
-						<input type="input" ng-model = "firstname" class="form-control" id="firstname" placeholder="First Name" required/>
-					</div>
-				</div>
-				<div class="col-md-6">
-					<div class="form-group">
-						<label for="lastname">Last Name</label> 
-						<input type="input" ng-model = "lastname" class="form-control" id="lastname" placeholder="Last Name" required/>
-					</div>
-				</div>
-				<div class="col-md-12">
-					<div class="form-group">
 						<label for="userId">User ID</label> 
 						<input type="input" ng-model = "userId" class="form-control" id="userId" placeholder="User ID" ng-minlength="3" ng-maxlength="8" required/>
 					</div>
@@ -39,11 +27,130 @@
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
-						<label for="rep_password">Repeat Password</label> 
-						<input type="password" ng-model = "rep_password" class="form-control" id="rep_password" placeholder="Repeat Password" required/>
+						<label for="firstname">First Name</label> 
+						<input type="input" ng-model = "firstname" class="form-control" id="firstname" placeholder="First Name" required/>
 					</div>
 				</div>
-				<span id='error_message'></span>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="lastname">Last Name</label> 
+						<input type="input" ng-model = "lastname" class="form-control" id="lastname" placeholder="Last Name" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="dob">Date of Birth</label> 
+						<input type="date" ng-model = "dob" class="form-control" id="dob" placeholder="Date of Birth" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="gender">Gender</label>
+						<label class="form-control">
+							<div class="row">
+								<div class="col-md-3">
+							    	<input type="radio" id="gender" ng-model="gender" ng-required="!gender" value="male"> Male
+						    	</div>
+							    <div class="col-md-3">
+							    	<input type="radio" id="gender" ng-model="gender" ng-required="!gender" value="female"> Female
+						    	</div>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="address">Address</label>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label for="street">Street</label> 
+						<input type="input" ng-model = "street" class="form-control" id="street" placeholder="Street" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="city">City</label> 
+						<input type="input" ng-model = "city" class="form-control" id="city" placeholder="City" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="state">State</label> 
+						<input type="input" ng-model = "state" class="form-control" id="state" placeholder="State" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="country">Country</label> 
+						<input type="input" ng-model = "country" class="form-control" id="country" placeholder="Country" required/>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<label for="zip">Zip Code</label> 
+						<input type="input" ng-model = "zip" class="form-control" id="zip" placeholder="Zip Code" required/>
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div class="form-group">
+						<label>Are you a Patient or Health Supporter?</label> 
+						<label class="form-control">
+							<div class="row">
+								<div class="col-md-3">
+							    	<input type="checkbox" ng-model="patient" ng-required="!isUserTypeSelected()"> Patient
+						    	</div>
+							    <div class="col-md-3">
+							    	<input type="checkbox" ng-model="healthSupporter" ng-required="!isUserTypeSelected()"> Health Supporter
+						    	</div>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-12" ng-hide="!patient">
+					<div class="form-group">
+						<label for="diagnosis">Diagnosis</label>
+						<label class="form-control">
+							<div class="row">
+								<div class="col-md-3">
+							    	<input type="checkbox" ng-model="heartDisease"> Heart Disease
+						    	</div>
+							    <div class="col-md-3">
+							    	<input type="checkbox" ng-model="copd"> COPD
+						    	</div>
+						    	<div class="col-md-3">
+							    	<input type="checkbox" ng-model="hiv"> HIV
+						    	</div>
+							</div>
+						</label>
+					</div>
+				</div>
+				<div class="col-md-12" ng-hide="!patient">
+					<div class="form-group">
+						<label>Health Supporter</label>
+						<div class="row">
+							<div class="col-md-6">
+								<label for="phsId">Primary Health Supporter ID</label> 
+								<input type="input" ng-model = "phsId" class="form-control" id="phsId" placeholder="Primary Health Supporter" required/>
+							</div>
+							<div class="col-md-6">
+								<label for="phsAd">Primary Health Supporter Authorization Date</label> 
+								<input type="date" ng-model = "phsAd" class="form-control" id="phsAd" placeholder="Primary Health Supporter Authorization Date" required/>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<label for="shsId">Secondary Health Supporter ID</label> 
+								<input type="input" ng-model = "shsId" class="form-control" id="shsId" placeholder="Secondary Health Supporter"/>
+							</div>
+							<div class="col-md-6">
+								<label for="shsAd">Secondary Health Supporter Authorization Date</label> 
+								<input type="date" ng-model = "shsAd" class="form-control" id="shsAd" placeholder="Secondary Health Supporter Authorization Date"/>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="col-md-12">
 					<button type="submit" class="btn btn-primary" ng-click="createUser()">Create User</button>
 				</div>

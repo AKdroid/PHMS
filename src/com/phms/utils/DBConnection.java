@@ -7,10 +7,10 @@ public class DBConnection
 	private static DBConnection dbConnection = null;
 	private Connection connection = null;
 	private static String CONNECTION_STRING = "jdbc:oracle:thin:@orca.csc.ncsu.edu:1521:orcl01";
-	private static String USER = "nshivra";
-	private static String PASSWORD = "200111243";
+	private static String USER = "arrao";
+	private static String PASSWORD = "200107246";
 	private static String DB_DRIVER = "oracle.jdbc.driver.OracleDriver";
-	
+
 	private DBConnection()
 	{
 		try 
@@ -24,7 +24,7 @@ public class DBConnection
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static DBConnection getConnection()
 	{
 		if(dbConnection == null)
@@ -49,11 +49,17 @@ public class DBConnection
 		}
 		return rs;
 	}
-	
-	// open connection
-	
+
 	// close connection
-	
+	protected void finalize() throws Throwable
+	{
+		System.out.println("Closing Collection");
+		if(connection != null)
+		{
+			connection.close();
+		}
+	}
+
 	// transaction
 	public boolean executeUpdate(String query){
 		boolean result = true;

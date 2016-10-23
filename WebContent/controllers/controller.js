@@ -1,25 +1,4 @@
 var app = angular.module("phmsApp", []);
-app.controller("loginController", function($scope, $http) {  
-    $scope.login = function() {
-    	if($scope.userId && $scope.password 
-    		&& $scope.userId !== "" && $scope.password !== "") {
-	        //console.log($scope.userId);
-	        //console.log($scope.password);
-	        $http({
-	            url : './login',
-	            method : "POST",
-	            data : {
-	                'userId' : $scope.userId,
-	                'password' : $scope.password
-	            }
-	        }).then(function(response) {
-	            console.log(response.data);
-	        }, function(response) { 
-	            console.log(response);
-	        });
-	    }
-    };
-});
 
 app.controller("createUserController", function($scope, $http) {  
     $scope.createUser = function() {

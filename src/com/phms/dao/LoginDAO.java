@@ -12,13 +12,13 @@ public class LoginDAO
 	{
 		DBConnection connection = DBConnection.getConnection();
 		ResultSet rs;
-		String user="";
+		String user = null;
 		String query = "SELECT USER_ID FROM APP_USERS WHERE USER_ID = '" 
 					+ login.getLoginUser() + "' AND PASSWORD = '" + login.getPassword() 
 					+ "' AND IS_ACTIVE = 'Active'";
 		rs = connection.executeQuery(query);
 		if(rs == null){
-			return "";
+			return user;
 		}
 		try {
 			while(rs.next()){

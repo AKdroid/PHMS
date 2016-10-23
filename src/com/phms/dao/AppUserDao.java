@@ -15,7 +15,7 @@ public class AppUserDao {
 	public AppUserBean fetchUserData(String userId){
 		AppUserBean appUser = new AppUserBean();
 		DBConnection dbConnection = DBConnection.getConnection();
-		String query = "SELECT * FROM APP_USERS WHERE USER_ID = " + userId;
+		String query = "SELECT * FROM APP_USERS WHERE USER_ID = '" + userId +"'";
 		ResultSet rs;
 		
 		rs = dbConnection.executeQuery(query);
@@ -29,23 +29,23 @@ public class AppUserDao {
 					appUser.setFirstName(rs.getString("FIRST_NAME"));
 					appUser.setLastName(rs.getString("LAST_NAME"));
 					
-					appUser.setPatient(rs.getString("USER_TYPE").equals("Supporter"));
-					appUser.setSupporter(rs.getString("USER_TYPE").equals("Patient"));
+					appUser.setPatient(!rs.getString("USER_TYPE").equals("Supporter"));
+					appUser.setSupporter(!rs.getString("USER_TYPE").equals("Patient"));
 					
 					appUser.setStreet(rs.getString("STREET"));
 					appUser.setCity(rs.getString("CITY"));
 					appUser.setState(rs.getString("STATE"));
 					appUser.setCountry(rs.getString("COUNTRY"));
-					appUser.setZipcode(rs.getString("ZIPCODE"));
+					appUser.setZipcode(rs.getString("ZIP_CODE"));
 					
 					appUser.setDob(rs.getDate("DOB"));
 					appUser.setGender(rs.getString("GENDER"));
 					
-					query = "SELECT D.DISEASE_NAME AS DISEASE_NAME,"
-							+ " R.DIAGNOSED_ON AS DIAGNOSED_ON, "
-							+ "R.CURED_ON AS CURED_ON,"
-							+ " R.STATUS AS STATUS FROM PATIENT_DISEASES R, DISEASES D"+
-							"WHERE D.DISEASE_ID = R.DISEASE_ID AND R.PATIENT_ID = "+userId;
+					query = "SELECT D.DISEASE_NAME AS DISEASE_NAME, "
+							+ "R.DIAGNOSED_ON AS DIAGNOSED_ON, "
+							+ "R.CURED_ON AS CURED_ON, "
+							+ "R.STATUS AS STATUS FROM PATIENT_DISEASES R, DISEASES D "+
+							"WHERE D.DISEASE_ID = R.DISEASE_ID AND R.USER_ID = '" + userId + "'";
 					rs = dbConnection.executeQuery(query);
 					while(rs.next()){
 						DiseaseBean dbean = new DiseaseBean();
@@ -55,14 +55,14 @@ public class AppUserDao {
 						dbean.setStatus(rs.getInt("STATUS"));
 						appUser.getDiseaseInfo().add(dbean);
 					}
-					query = "SELECT  U.USER_ID AS USER_ID,"
-							+ "U.FIRST_NAME AS FIRST_NAME,"
-							+ "U.LAST_NAME AS LAST_NAME,"
-							+ "R.AUTHORIZATION_DATE AS AUTH_DATE,"
-							+ "R.IS_PRIMARY"
-							+ "FROM APP_USERS U, PATIENT_SUPPORTERS R WHERE"
-							+ "R.USER_ID_SUPPORTER = U.USER_ID AND"
-							+ "R.USER_ID_PATIENT = " +userId;
+					query = "SELECT  U.USER_ID AS USER_ID, "
+							+ "U.FIRST_NAME AS FIRST_NAME, "
+							+ "U.LAST_NAME AS LAST_NAME, "
+							+ "R.AUTHORIZATION_DATE AS AUTH_DATE, "
+							+ "R.IS_PRIMARY "
+							+ "FROM APP_USERS U, PATIENT_SUPPORTERS R WHERE "
+							+ "R.USER_ID_SUPPORTER = U.USER_ID AND "
+							+ "R.USER_ID_PATIENT = '" + userId + "'";
 					rs = dbConnection.executeQuery(query);
 					while(rs.next()){
 						if(rs.getInt("IS_PRIMARY")==1){

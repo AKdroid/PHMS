@@ -10,37 +10,37 @@
 	</head>
 	<body>
 		<div ng-include="'../views/header.html'"></div>
-		<div class="container" ng-controller="createUserController">
+		<div class="container">
 			<h3>New User</h3>
-			<form>
+			<form method="POST" action="../addUser">
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="userId">User ID</label> 
-						<input type="input" ng-model = "userId" class="form-control" id="userId" placeholder="User ID" ng-minlength="3" ng-maxlength="8" required/>
+						<input type="input" ng-model = "userId" class="form-control" id="userId" name="userId" placeholder="User ID" ng-minlength="3" ng-maxlength="8" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="password">Password</label> 
-						<input type="password" ng-model = "password" class="form-control" id="password" placeholder="Password" required/>
+						<input type="password" ng-model = "password" class="form-control" id="password" name="password" placeholder="Password" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="firstname">First Name</label> 
-						<input type="input" ng-model = "firstname" class="form-control" id="firstname" placeholder="First Name" required/>
+						<input type="input" ng-model = "firstname" class="form-control" name="firstname" id="firstname" placeholder="First Name" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="lastname">Last Name</label> 
-						<input type="input" ng-model = "lastname" class="form-control" id="lastname" placeholder="Last Name" required/>
+						<input type="input" ng-model = "lastname" class="form-control" name="lastname" id="lastname" placeholder="Last Name" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="dob">Date of Birth</label> 
-						<input type="date" ng-model = "dob" class="form-control" id="dob" placeholder="Date of Birth" required/>
+						<input type="date" ng-model = "dob" class="form-control" id="dob" name="dob" placeholder="Date of Birth" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -49,10 +49,10 @@
 						<label class="form-control">
 							<div class="row">
 								<div class="col-md-3">
-							    	<input type="radio" id="gender" ng-model="gender" ng-required="!gender" value="male"> Male
+							    	<input type="radio" id="gender" name="gender" ng-model="gender" ng-required="!gender" value="male"> Male
 						    	</div>
 							    <div class="col-md-3">
-							    	<input type="radio" id="gender" ng-model="gender" ng-required="!gender" value="female"> Female
+							    	<input type="radio" id="gender" name="gender" ng-model="gender" ng-required="!gender" value="female"> Female
 						    	</div>
 							</div>
 						</label>
@@ -66,31 +66,31 @@
 				<div class="col-md-12">
 					<div class="form-group">
 						<label for="street">Street</label> 
-						<input type="input" ng-model = "street" class="form-control" id="street" placeholder="Street" required/>
+						<input type="input" ng-model = "street" class="form-control" name ="street" id="street" placeholder="Street" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="city">City</label> 
-						<input type="input" ng-model = "city" class="form-control" id="city" placeholder="City" required/>
+						<input type="input" ng-model = "city" class="form-control" name="city" id="city" placeholder="City" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="state">State</label> 
-						<input type="input" ng-model = "state" class="form-control" id="state" placeholder="State" required/>
+						<input type="input" ng-model = "state" class="form-control" name="state" id="state" placeholder="State" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="country">Country</label> 
-						<input type="input" ng-model = "country" class="form-control" id="country" placeholder="Country" required/>
+						<input type="input" ng-model = "country" class="form-control" name="country" id="country" placeholder="Country" required/>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="form-group">
 						<label for="zip">Zip Code</label> 
-						<input type="input" ng-model = "zip" class="form-control" id="zip" placeholder="Zip Code" required/>
+						<input type="input" ng-model = "zip" class="form-control" name="zipcode" id="zip" placeholder="Zip Code" required/>
 					</div>
 				</div>
 				<div class="col-md-12">
@@ -99,10 +99,10 @@
 						<label class="form-control">
 							<div class="row">
 								<div class="col-md-3">
-							    	<input type="checkbox" ng-model="patient" ng-required="!isUserTypeSelected()"> Patient
+							    	<input type="checkbox" ng-model="patient" name="usertype" value="patient"> Patient
 						    	</div>
 							    <div class="col-md-3">
-							    	<input type="checkbox" ng-model="healthSupporter" ng-required="!isUserTypeSelected()"> Health Supporter
+							    	<input type="checkbox" ng-model="healthSupporter" name="usertype" value="supporter"> Health Supporter
 						    	</div>
 							</div>
 						</label>
@@ -114,13 +114,13 @@
 						<label class="form-control">
 							<div class="row">
 								<div class="col-md-3">
-							    	<input type="checkbox" ng-model="heartDisease"> Heart Disease
+							    	<input type="checkbox" name="diseases" value="Heart Disease"> Heart Disease
 						    	</div>
 							    <div class="col-md-3">
-							    	<input type="checkbox" ng-model="copd"> COPD
+							    	<input type="checkbox" name="diseases" value="COPD"> COPD
 						    	</div>
 						    	<div class="col-md-3">
-							    	<input type="checkbox" ng-model="hiv"> HIV
+							    	<input type="checkbox" name="diseases" value="HIV"> HIV
 						    	</div>
 							</div>
 						</label>
@@ -132,27 +132,27 @@
 						<div class="row">
 							<div class="col-md-6">
 								<label for="phsId">Primary Health Supporter ID</label> 
-								<input type="input" ng-model = "phsId" class="form-control" id="phsId" placeholder="Primary Health Supporter" required/>
+								<input type="input" name = "phsId" class="form-control" id="phsId" placeholder="Primary Health Supporter"/>
 							</div>
 							<div class="col-md-6">
 								<label for="phsAd">Primary Health Supporter Authorization Date</label> 
-								<input type="date" ng-model = "phsAd" class="form-control" id="phsAd" placeholder="Primary Health Supporter Authorization Date" required/>
+								<input type="date" name = "phsAd" class="form-control" id="phsAd" placeholder="Primary Health Supporter Authorization Date"/>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-6">
 								<label for="shsId">Secondary Health Supporter ID</label> 
-								<input type="input" ng-model = "shsId" class="form-control" id="shsId" placeholder="Secondary Health Supporter"/>
+								<input type="input" name = "shsId" class="form-control" id="shsId" placeholder="Secondary Health Supporter"/>
 							</div>
 							<div class="col-md-6">
 								<label for="shsAd">Secondary Health Supporter Authorization Date</label> 
-								<input type="date" ng-model = "shsAd" class="form-control" id="shsAd" placeholder="Secondary Health Supporter Authorization Date"/>
+								<input type="date" name = "shsAd" class="form-control" id="shsAd" placeholder="Secondary Health Supporter Authorization Date"/>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-12">
-					<button type="submit" class="btn btn-primary" ng-click="createUser()">Create User</button>
+					<button type="submit" class="btn btn-primary" >Create User</button>
 				</div>
 			</form>
 		</div>

@@ -596,10 +596,10 @@ public class AppUserDao {
 				int diseaseId = getDiseaseId(dbean.getDiseaseName());
 				if(!is_sick)
 					is_sick = diseaseId > 1;
-				query = "INSERT INTO PATIENT_DISEASES VALUES ("
+				query = "INSERT INTO PATIENT_DISEASES VALUES ('"
 					+ubean.getUserId()+"',"
 					+diseaseId+",'"
-					+dbean.getDiagnosedOn()+"',NULL,0,2)";
+					+convertDateToString(dbean.getDiagnosedOn())+"',NULL,1,'Active')";
 				result = conn.executeUpdate(query);
 				if(result){
 					result = result && conn.executeCopyDefaultRecommendations(ubean.getUserId(),diseaseId);
@@ -611,7 +611,7 @@ public class AppUserDao {
 			query = "INSERT INTO PATIENT_SUPPORTERS VALUES ('"
 				+ ubean.getUserId()+"','"
 				+ ubean.getPhsUserId()+"','"
-				+ convertDateToString(ubean.getPhsAuthorizationDate())+"',1)";
+				+ convertDateToString(ubean.getPhsAuthorizationDate())+"',1,'Active')";
 			result = result & conn.executeUpdate(query);
 			if(result)
 				has_supporter = true;
@@ -619,11 +619,11 @@ public class AppUserDao {
 				query = "INSERT INTO PATIENT_SUPPORTERS VALUES ('"
 				+ ubean.getUserId()+"','"
 				+ ubean.getShsUserId()+"','"
-				+ convertDateToString(ubean.getShsAuthorizationDate())+"',0)";
+				+ convertDateToString(ubean.getShsAuthorizationDate())+"',0,'Active')";
 				result = result & conn.executeUpdate(query);
 			}
 		}
-		if(!is_sick && ubean.isPatient() && !has_supporter){
+		if(is_sick && ubean.isPatient() && !has_supporter){
 			query = "UPDATE APP_USERS SET IS_ACTIVE = 'Inactive' WHERE USER_ID = '"+ubean.getUserId()+"'"; 
 			result = result & conn.executeUpdate(query);
 		}

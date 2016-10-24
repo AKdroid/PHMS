@@ -52,4 +52,14 @@
     <servlet-name>DeleteAlertServlet</servlet-name>
     <url-pattern>/deleteAlert</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>CreateUserServlet</servlet-name>
+    <servlet-class>com.phms.controllers.CreateUserServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreateUserServlet</servlet-name>
+    <url-pattern>/addUser</url-pattern>
+  </servlet-mapping>
+  
+  
 </web-app>

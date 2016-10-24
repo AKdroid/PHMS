@@ -11,10 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.phms.beans.AppUserBean;
-import com.phms.beans.LoginBean;
 import com.phms.beans.ObservationBean;
 import com.phms.dao.AppUserDao;
-import com.phms.dao.LoginDAO;
 import com.phms.dao.ObservationDAO;
 
 @WebServlet("/ObservationServlet")
@@ -31,7 +29,7 @@ public class ObservationServlet extends HttpServlet
 	{
 		try
 		{
-			SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd hh:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 	        String userId = request.getParameter("userId");
 	        ObservationBean obsBean = new ObservationBean();
 	        if(request.getParameter("temp") != null && !request.getParameter("temp").trim().equals(""))
@@ -45,7 +43,7 @@ public class ObservationServlet extends HttpServlet
 	        {
 	        	obsBean.setBPAvailable(true);
 	        	obsBean.setSystolic(Double.parseDouble(request.getParameter("systolic")));
-	        	obsBean.setSystolic(Double.parseDouble(request.getParameter("diastolic")));
+	        	obsBean.setDiastolic(Double.parseDouble(request.getParameter("diastolic")));
 	        	obsBean.setBpDate(sdf.parse(request.getParameter("bpDate") + " " + request.getParameter("bpTime")));
 	        }
 	        if(request.getParameter("weight") != null && !request.getParameter("weight").trim().equals(""))
@@ -69,12 +67,11 @@ public class ObservationServlet extends HttpServlet
 	        if(request.getParameter("mood") != null && !request.getParameter("mood").trim().equals(""))
 	        {
 	        	obsBean.setMoodAvailable(true);
-	        	obsBean.setMood(request.getParameter("mood").trim().equalsIgnoreCase("happy") ? 0 : 
-	        		request.getParameter("mood").trim().equalsIgnoreCase("neutral") ? 1 : 2);
+	        	obsBean.setMood(request.getParameter("mood"));
 	        	obsBean.setMoodDate(sdf.parse(request.getParameter("moodDate") + " " + request.getParameter("moodTime")));
 	        }
 	        ObservationDAO observationDAO = new ObservationDAO();
-	        boolean insertSuccess = observationDAO.insertObservation(userId, obsBean);
+	        boolean insertSuccess = observationDAO.addObservation(userId, obsBean);
 	        AppUserDao appUserDao = new AppUserDao();
 			AppUserBean appUserBean = appUserDao.fetchUserData(userId);
 			request.setAttribute("appUserBean", appUserBean);

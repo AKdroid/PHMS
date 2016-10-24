@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.phms.beans.AppUserBean" %>
 <%@ page import="com.phms.beans.DiseaseBean" %>
+<%@ page import="com.phms.beans.AppUserBasicBean" %>
+<%@ page import="com.phms.beans.AlertBean" %>
+<%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="">
 	<head>
@@ -13,18 +16,22 @@
 		<link type="text/css" rel="stylesheet" href="css/bootstrap-theme.min.css" />
 		<% AppUserBean appUserBean = (AppUserBean) request.getAttribute("appUserBean"); %>
 		<% String message = (String) request.getAttribute("message"); %>
+		<% String viewMessage = (String) request.getAttribute("viewMessage"); %>
+		<% String hspage = (String) request.getAttribute("hspage"); %>
+		<% List<AppUserBasicBean> patients = (ArrayList<AppUserBasicBean>)request.getAttribute("patients"); %>
+		<% List<AlertBean> alerts = (ArrayList<AlertBean>)request.getAttribute("alerts"); %>
 	</head>
 	<body>
 		<div ng-include="'views/header.html'"></div>
 		<div class="container">
 			<ul class="nav nav-tabs">
 				<% if(appUserBean.isPatient()) { %>
-			  	<li <%if(appUserBean.isPatient()) { %> class="active" <% } %>>
+			  	<li <%if(appUserBean.isPatient() && hspage == null) { %> class="active" <% } %>>
 			  		<a data-toggle="tab" href="#patient">Patient Details</a>
 			  	</li>
 			  	<% } %>
 			  	<% if(appUserBean.isSupporter()) { %>
-			  	<li <%if(!appUserBean.isPatient()) { %> class="active" <% } %>>
+			  	<li <%if(!appUserBean.isPatient() || hspage != null) { %> class="active" <% } %>>
 			  		<a data-toggle="tab" href="#hs">Health Supporter Details</a>
 			  	</li>
 			  	<% } %>
@@ -55,7 +62,7 @@
 			</div>
 			<div class="tab-content">
 				<% if(appUserBean.isPatient()) { %>
-			  	<div id="patient" class="tab-pane fade in active">
+			  	<div id="patient" class="tab-pane fade <%if(appUserBean.isPatient() && hspage == null) { %> in active <% } %>">
 			  		<% if(appUserBean.getDiseaseInfo().size() > 0) { %>
 			    	<div class="row">
 						<div class="col-md-3">
@@ -227,8 +234,85 @@
 			  	</div>
 			  	<% } %>
 			  	<% if(appUserBean.isSupporter()) { %>
-			  	<div id="hs" class="tab-pane fade">
-			    	<h3>Health Supporter</h3>
+			  	<div id="hs" class="tab-pane fade <%if(!appUserBean.isPatient() || hspage != null) { %> in active <% } %>">
+			  		<div class="row">
+						<div class="col-md-3">
+							<label>View Details</label> 
+						</div>
+					</div>
+			  		<% if(viewMessage != null) { %>
+					<span> <%=viewMessage %> </span>
+					<% } %>
+			    	<form method='POST' action="./viewDetails">
+			    		<input type="hidden" name="userId" id="userId" value="<%=appUserBean.getUserId()%>"/>
+						<div class="col-md-6">
+							<div class="form-group">
+								<select class="form-control" name="selView" id="selView">
+								    <option value="patients">Patients</option>
+								    <option value="alerts">Alerts</option>
+								</select>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<button type="submit" class="btn btn-primary">View</button>
+						</div>
+					</form>
+					<% if(patients != null && patients.size() > 0) { %>
+					<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>Patient ID</th>
+					        <th>Patient Name</th>
+					      </tr>
+					    </thead>
+						<tbody>
+						<% for(AppUserBasicBean patient : patients) { %>
+						<tr>
+					        <td>
+					        	<a href="./viewPatient?sid=<%=appUserBean.getUserId() %>&pid=<%=patient.getUserId()%>"> 
+					        		<%=patient.getUserId()%> 
+					        	</a>
+					        </td>
+					        <td><%=patient.getFirstName() + " " + patient.getLastName()%></td>
+				      	</tr>
+						<% } %>
+						<tbody>
+					</table>
+					<% } else if(patients != null && patients.size() == 0) { %>
+					<span> No patients to view. </span>
+					<% } %>
+					<% if(alerts != null && alerts.size() > 0) { %>
+					<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>Patient ID</th>
+					        <th>Type</th>
+					        <th>Alert Message</th>
+					        <th>Justification</th>
+					        <th>Delete</th>
+					      </tr>
+					    </thead>
+						<tbody>
+						<% for(AlertBean alert : alerts) { %>
+						<tr>
+					        <td><%=alert.getPatientId() %></td>
+					        <td><%=alert.getObsType() %></td>
+					        <td><%=alert.getAlert()%></td>
+					        <td>
+					        	<input type="input" class="form-control" name="reason" ng-model="reason<%=alert.getAlertId() %>" id="reason" placeholder="Justification"/>
+					        </td>
+					        <td>
+					        	<a href="./deleteAlert?alertId=<%=alert.getAlertId()%>&deletedBy=<%=appUserBean.getUserId()%>&message={{reason<%=alert.getAlertId() %>}}">
+					        		Delete
+				        		</a>
+				        	</td>
+				      	</tr>
+						<% } %>
+						<tbody>
+					</table>
+					<% } else if(alerts != null && alerts.size() == 0) { %>
+					<span> No alerts to view. </span>
+					<% } %>
 			  	</div>
 			  	<% } %>
 			</div>

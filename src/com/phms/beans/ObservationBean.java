@@ -4,13 +4,15 @@ import java.util.Date;
 
 public class ObservationBean 
 {
+	private boolean isObservationAvailable;
+	
 	private boolean isTempAvailable;
 	private double temperature;
 	private Date tempDate;
 
 	private boolean isBPAvailable;
 	private double systolic;
-	private double diatolic;
+	private double diastolic;
 	private Date bpDate;
 
 	private boolean isWeightAvailable;
@@ -26,7 +28,7 @@ public class ObservationBean
 	private Date painDate;
 
 	private boolean isMoodAvailable;
-	private int mood;
+	private String mood;
 	private Date moodDate;
 	
 	public boolean isTempAvailable() {
@@ -59,11 +61,11 @@ public class ObservationBean
 	public void setSystolic(double systolic) {
 		this.systolic = systolic;
 	}
-	public double getDiatolic() {
-		return diatolic;
+	public double getDiastolic() {
+		return diastolic;
 	}
-	public void setDiatolic(double diatolic) {
-		this.diatolic = diatolic;
+	public void setDiastolic(double diastolic) {
+		this.diastolic = diastolic;
 	}
 	public Date getBpDate() {
 		return bpDate;
@@ -131,10 +133,10 @@ public class ObservationBean
 	public void setMoodAvailable(boolean isMoodAvailable) {
 		this.isMoodAvailable = isMoodAvailable;
 	}
-	public int getMood() {
+	public String getMood() {
 		return mood;
 	}
-	public void setMood(int mood) {
+	public void setMood(String mood) {
 		this.mood = mood;
 	}
 	public Date getMoodDate() {
@@ -142,5 +144,11 @@ public class ObservationBean
 	}
 	public void setMoodDate(Date moodDate) {
 		this.moodDate = moodDate;
+	}
+	public boolean isObservationAvailable() {
+		return isObservationAvailable;
+	}
+	public void setObservationAvailable(boolean isObservationAvailable) {
+		this.isObservationAvailable = isObservationAvailable;
 	}
 }

@@ -20,4 +20,36 @@
     <servlet-name>ObservationServlet</servlet-name>
     <url-pattern>/observation</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <servlet-name>ViewDetailsServlet</servlet-name>
+    <servlet-class>com.phms.controllers.ViewDetailsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewDetailsServlet</servlet-name>
+    <url-pattern>/viewDetails</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ViewPatientServlet</servlet-name>
+    <servlet-class>com.phms.controllers.ViewPatientServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewPatientServlet</servlet-name>
+    <url-pattern>/viewPatient</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RecommendationServlet</servlet-name>
+    <servlet-class>com.phms.controllers.RecommendationServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RecommendationServlet</servlet-name>
+    <url-pattern>/insertRecommendation</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteAlertServlet</servlet-name>
+    <servlet-class>com.phms.controllers.DeleteAlertServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteAlertServlet</servlet-name>
+    <url-pattern>/deleteAlert</url-pattern>
+  </servlet-mapping>
 </web-app>

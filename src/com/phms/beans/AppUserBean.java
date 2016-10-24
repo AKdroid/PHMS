@@ -23,6 +23,10 @@ public class AppUserBean {
 	Date dob;
 	// Diagnoses
 	ArrayList<DiseaseBean> diseaseInfo;
+	//Alerts
+	ArrayList<AlertBean> alerts;
+	// alerts for patients
+	ArrayList<AlertBean> patientAlerts;
 	// Primary Health Supporter
 	String phsUserId;
 	String phsUserIdName;
@@ -32,8 +36,26 @@ public class AppUserBean {
 	String shsUserIdName;
 	Date shsAuthorizationDate;
 	
+	public ArrayList<AlertBean> getAlerts() {
+		return alerts;
+	}
+
+	public void setAlerts(ArrayList<AlertBean> alerts) {
+		this.alerts = alerts;
+	}
+
+	public ArrayList<AlertBean> getPatientAlerts() {
+		return patientAlerts;
+	}
+
+	public void setPatientAlerts(ArrayList<AlertBean> patientAlerts) {
+		this.patientAlerts = patientAlerts;
+	}
+
 	public AppUserBean(){
 		diseaseInfo = new ArrayList<DiseaseBean>();
+		alerts = new ArrayList<AlertBean>();
+		patientAlerts = new ArrayList<AlertBean>();
 	}
 
 	public String getUserId() {

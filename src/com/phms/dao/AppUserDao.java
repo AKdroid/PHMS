@@ -533,4 +533,104 @@ public class AppUserDao {
 		conn.commit();
 		return result;
 	}
+	
+	public String getUserType(boolean isPatient, boolean isSupporter){
+		String result;
+		if(isPatient) 
+			result = "Patient";
+		else
+			result = "Supporter";
+		if(isPatient && isSupporter)
+			result = "Both";
+		return result;
+	}
+
+	public int getDiseaseId(String diseaseName){
+		DBConnection conn = DBConnection.getConnection();
+		ResultSet rs;
+		String query;
+		int result=-1;
+		query = "SELECT DISEASE_ID FROM DISEASES WHERE DISEASE_NAME =  '"+diseaseName +"'";
+		rs = conn.executeQuery(query);
+		try{
+			while(rs!=null && rs.next()){
+				result = rs.getInt("DISEASE_ID");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public String convertDateToString(Date dt){
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
+		return sdf.format(dt);
+	}
+	
+	public boolean addUser(AppUserBean ubean){
+
+		boolean result = true;
+		String query;
+		DBConnection conn = DBConnection.getConnection();
+		boolean is_sick=false;
+		boolean has_supporter=false;
+
+		query = "INSERT INTO APP_USERS VALUES ('"
+		          + ubean.getUserId() +"','"
+		          + ubean.getPassword()+"','"
+		          + ubean.getFirstName()+"','"
+		          + ubean.getLastName()+"',"
+		          + "CURRENT_TIMESTAMP , CURRENT_TIMESTAMP,'"
+		          + getUserType(ubean.isPatient(),ubean.isSupporter()) +"','"
+		          + convertDateToString(ubean.getDob()) + "','"
+		          + ubean.getGender() +"','"
+		          + ubean.getStreet() + "','"
+		          + ubean.getCity() + "','"
+		          + ubean.getState() + "','"
+		          + ubean.getCountry() + "','"
+		          + ubean.getZipcode() + "','Active')";
+
+		result = conn.executeUpdate(query);
+		if(result){
+			for(DiseaseBean dbean : ubean.getDiseaseInfo()){
+				int diseaseId = getDiseaseId(dbean.getDiseaseName());
+				if(!is_sick)
+					is_sick = diseaseId > 1;
+				query = "INSERT INTO PATIENT_DISEASES VALUES ("
+					+ubean.getUserId()+"',"
+					+diseaseId+",'"
+					+dbean.getDiagnosedOn()+"',NULL,0,2)";
+				result = conn.executeUpdate(query);
+				if(result){
+					result = result && conn.executeCopyDefaultRecommendations(ubean.getUserId(),diseaseId);
+				}
+			}
+		}
+
+		if(ubean.getPhsUserId()!=null){
+			query = "INSERT INTO PATIENT_SUPPORTERS VALUES ('"
+				+ ubean.getUserId()+"','"
+				+ ubean.getPhsUserId()+"','"
+				+ convertDateToString(ubean.getPhsAuthorizationDate())+"',1)";
+			result = result & conn.executeUpdate(query);
+			if(result)
+				has_supporter = true;
+			if(ubean.getShsUserId()!=null){
+				query = "INSERT INTO PATIENT_SUPPORTERS VALUES ('"
+				+ ubean.getUserId()+"','"
+				+ ubean.getShsUserId()+"','"
+				+ convertDateToString(ubean.getShsAuthorizationDate())+"',0)";
+				result = result & conn.executeUpdate(query);
+			}
+		}
+		if(!is_sick && ubean.isPatient() && !has_supporter){
+			query = "UPDATE APP_USERS SET IS_ACTIVE = 'Inactive' WHERE USER_ID = '"+ubean.getUserId()+"'"; 
+			result = result & conn.executeUpdate(query);
+		}
+		if(result && !conn.commit()){
+			result = conn.rollback();
+		}
+		return result;
+	}
+	
 }

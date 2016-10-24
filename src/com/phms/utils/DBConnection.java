@@ -186,4 +186,19 @@ public class DBConnection
 			return false;
 		}
 	}
+	
+	public boolean executeCopyDefaultRecommendations(String patientId, int diseaseId){
+		CallableStatement cStmt;
+		try{
+			cStmt = connection.prepareCall("{call copy_default_recommendation(?,?)}");
+			cStmt.setString(1,patientId);
+			cStmt.setInt(2,diseaseId);
+			cStmt.execute();
+			return true;
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 }

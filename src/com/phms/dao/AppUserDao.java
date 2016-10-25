@@ -187,7 +187,8 @@ public class AppUserDao {
 				+ "R.IS_PRIMARY "
 				+ "FROM APP_USERS U, PATIENT_SUPPORTERS R WHERE "
 				+ "R.USER_ID_PATIENT = U.USER_ID AND "
-				+ "R.USER_ID_SUPPORTER = '" + supporterId + "'";
+				+ "R.USER_ID_SUPPORTER = '" + supporterId + "' "
+				+ "AND R.AUTHORIZATION_DATE <= CURRENT_TIMESTAMP";
 		rs = conn.executeQuery(query);
 		try {
 			while(rs.next()){

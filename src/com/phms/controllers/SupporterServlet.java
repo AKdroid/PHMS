@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.phms.beans.AppUserBean;
+import com.phms.dao.AppUserDao;
 
 /**
  * Servlet implementation class SupporterServlet
@@ -33,6 +34,7 @@ public class SupporterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try{
+		AppUserDao appUserDao = new AppUserDao();
 		String userid = request.getParameter("userId");
 		ArrayList<String> existingUserIds = new ArrayList<String>();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
@@ -50,11 +52,13 @@ public class SupporterServlet extends HttpServlet {
 			ubean.setShsUserId(shsuser);
 			ubean.setShsAuthorizationDate(sdf.parse(shsDate));
 		}
+		appUserDao.addHealthSupporter(ubean);
+		
+		
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

@@ -59,7 +59,7 @@ public class ObservationDAO {
 		}
 
 		if(result){
-			conn.executeOutOfBoundsProcedure(patientId);
+			//conn.executeOutOfBoundsProcedure(patientId);
 			if(!conn.commit())
 				conn.rollback();
 		} else {

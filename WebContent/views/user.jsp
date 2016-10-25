@@ -23,6 +23,21 @@
 	</head>
 	<body>
 		<div ng-include="'views/header.html'"></div>
+		<form method='POST' action="./logout">
+				<div class="col-md-9">
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-primary">Logout</button>
+				</div>
+		</form>
+		<form method='POST' action="./viewAlerts">
+				<input type="hidden" name="userId" id="userId" value="<%=appUserBean.getUserId() %>"/>
+				<div class="col-md-9">
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-primary <%if(appUserBean.getAlerts().size() == 0) {%> disabled <% } %>">Alerts (<%=appUserBean.getAlerts().size()%>)</button>
+				</div>
+		</form>
 		<div class="container">
 			<ul class="nav nav-tabs">
 				<% if(appUserBean.isPatient()) { %>
@@ -86,6 +101,7 @@
 						<tbody>
 					</table>
 					<% } %>
+					<%if (appUserBean.getActive().equals("Active")){ %>
 					<div class="row">
 						<div class="col-md-3">
 							<label>Observations</label> 
@@ -231,6 +247,35 @@
 							<button type="submit" class="btn btn-primary">Submit</button>
 						</div>
 					</form>
+					<% } else { %>
+						<span> At least one health supporter is mandatory. Add an existing health supporter</span>
+						<form method="POST" action="./addSupporter">
+							<div class="form-group">
+							<input type="hidden" name="userId" value="<%= appUserBean.getUserId() %>"/>
+							<label>Health Supporter</label>
+							<div class="row">
+								<div class="col-md-6">
+									<label for="phsId">Primary Health Supporter ID</label> 
+									<input type="input" name = "phsId" class="form-control" id="phsId" placeholder="Primary Health Supporter"/>
+								</div>
+								<div class="col-md-6">
+									<label for="phsAd">Primary Health Supporter Authorization Date</label> 
+									<input type="date" name = "phsAd" class="form-control" id="phsAd" placeholder="Primary Health Supporter Authorization Date"/>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<label for="shsId">Secondary Health Supporter ID</label> 
+									<input type="input" name = "shsId" class="form-control" id="shsId" placeholder="Secondary Health Supporter"/>
+								</div>
+								<div class="col-md-6">
+									<label for="shsAd">Secondary Health Supporter Authorization Date</label> 
+									<input type="date" name = "shsAd" class="form-control" id="shsAd" placeholder="Secondary Health Supporter Authorization Date"/>
+								</div>
+							</div>
+							</div>
+						</form>
+					<% } %>
 			  	</div>
 			  	<% } %>
 			  	<% if(appUserBean.isSupporter()) { %>

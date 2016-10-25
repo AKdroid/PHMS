@@ -13,6 +13,14 @@
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>
+    <servlet-name>LogoutServlet</servlet-name>
+    <servlet-class>com.phms.controllers.LogoutServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogoutServlet</servlet-name>
+    <url-pattern>/logout</url-pattern>
+  </servlet-mapping>
+  <servlet>
     <servlet-name>ObservationServlet</servlet-name>
     <servlet-class>com.phms.controllers.ObservationServlet</servlet-class>
   </servlet>
@@ -60,6 +68,12 @@
     <servlet-name>CreateUserServlet</servlet-name>
     <url-pattern>/addUser</url-pattern>
   </servlet-mapping>
-  
-  
+  <servlet>
+    <servlet-name>ViewAlerts</servlet-name>
+    <servlet-class>com.phms.controllers.ViewAlerts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ViewAlerts</servlet-name>
+    <url-pattern>/viewAlerts</url-pattern>
+  </servlet-mapping>
 </web-app>

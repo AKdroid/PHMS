@@ -23,6 +23,21 @@
 	</head>
 	<body>
 		<div ng-include="'views/header.html'"></div>
+		<form method='POST' action="./logout">
+				<div class="col-md-9">
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-primary">Logout</button>
+				</div>
+		</form>
+		<form method='POST' action="./viewAlerts">
+				<input type="hidden" name="userId" id="userId" value="<%=appUserBean.getUserId() %>"/>
+				<div class="col-md-9">
+				</div>
+				<div class="col-md-3">
+					<button type="submit" class="btn btn-primary <%if(appUserBean.getAlerts().size() == 0) {%> disabled <% } %>">Alerts (<%=appUserBean.getAlerts().size()%>)</button>
+				</div>
+		</form>
 		<div class="container">
 			<ul class="nav nav-tabs">
 				<% if(appUserBean.isPatient()) { %>

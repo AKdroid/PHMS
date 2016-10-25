@@ -17,14 +17,19 @@
 	</head>
 	<body>
 		<div ng-include="'views/header.html'"></div>
-		<form method='POST' action="./viewDetails">
-				<input type="hidden" name="userId" id="userId" value="<%=supporterId %>"/>
-				<div class="col-md-9">
-				</div>
-				<div class="col-md-3">
+		<div class="row">
+			<div class="col-md-9">
+			</div>
+			<div class="col-md-3">
+				<form method='POST' action="./viewDetails">
+					<input type="hidden" name="userId" id="userId" value="<%=supporterId %>"/>
 					<button type="submit" class="btn btn-primary">Back</button>
-				</div>
-		</form>
+				</form>
+				<form method='POST' action="./logout">
+					<button type="submit" class="btn btn-primary">Logout</button>
+				</form>
+			</div>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">

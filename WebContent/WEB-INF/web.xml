@@ -60,6 +60,4 @@
     <servlet-name>CreateUserServlet</servlet-name>
     <url-pattern>/addUser</url-pattern>
   </servlet-mapping>
-  
-  
 </web-app>

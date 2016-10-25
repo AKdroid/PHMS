@@ -15,7 +15,7 @@ public class LoginDAO
 		String user = null;
 		String query = "SELECT USER_ID FROM APP_USERS WHERE USER_ID = '" 
 					+ login.getLoginUser() + "' AND PASSWORD = '" + login.getPassword() 
-					+ "' AND IS_ACTIVE = 'Active'";
+					+ "' AND IS_ACTIVE <> 'Deleted'";
 		rs = connection.executeQuery(query);
 		if(rs == null){
 			return user;

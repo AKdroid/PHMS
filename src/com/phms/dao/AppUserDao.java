@@ -41,6 +41,7 @@ public class AppUserDao {
 					appUser.setState(rs.getString("STATE"));
 					appUser.setCountry(rs.getString("COUNTRY"));
 					appUser.setZipcode(rs.getString("ZIP_CODE"));
+					appUser.setActive(rs.getString("IS_ACTIVE"));
 
 					appUser.setDob(rs.getDate("DOB"));
 					appUser.setGender(rs.getString("GENDER"));
@@ -96,6 +97,7 @@ public class AppUserDao {
 		}
 		return appUser;
 	}
+	
 	/*public AppUserBean fetchUserData(String userId){
 		AppUserBean appUser = new AppUserBean();
 		DBConnection dbConnection = DBConnection.getConnection();
@@ -202,21 +204,28 @@ public class AppUserDao {
 		return users;
 	}
 
-	public void addAppUser(AppUserBasicBean bean){
-
-	}
-
-	public boolean setPrimaryHealthSupporter(String userId, Date authDate){
+	public boolean addHealthSupporter(AppUserBean ubean){
 		boolean result = false;
+		String query;
+		DBConnection conn = DBConnection.getConnection();
+		if(ubean.getPhsUserId()!=null){
+			query = "INSERT INTO PATIENT_SUPPORTERS VALUES ('"
+				+ ubean.getUserId()+"','"
+				+ ubean.getPhsUserId()+"','"
+				+ convertDateToString(ubean.getPhsAuthorizationDate())+"',1,'Active')";
+			result = result & conn.executeUpdate(query);
+			if(ubean.getShsUserId()!=null){
+				query = "INSERT INTO PATIENT_SUPPORTERS VALUES ('"
+				+ ubean.getUserId()+"','"
+				+ ubean.getShsUserId()+"','"
+				+ convertDateToString(ubean.getShsAuthorizationDate())+"',0,'Active')";
+				result = result & conn.executeUpdate(query);
+			}
+		}
 
-
-		return result;
-	}
-
-	public boolean setSecondaryHealthSupporter(String userId, Date authDate){
-		boolean result = false;
-
-
+		if(result && !conn.commit()){
+			conn.rollback();
+		}
 		return result;
 	}
 

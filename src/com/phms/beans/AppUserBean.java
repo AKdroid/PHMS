@@ -10,6 +10,8 @@ public class AppUserBean {
 	
 	String firstName;
 	String lastName;
+	String active;
+
 	//gender
 	String gender;
 	// roles
@@ -68,6 +70,14 @@ public class AppUserBean {
 		this.userId = userId;
 	}
 
+	public String getActive() {
+		return active;
+	}
+
+	public void setActive(String active) {
+		this.active = active;
+	}
+	
 	public String getPassword() {
 		return password;
 	}

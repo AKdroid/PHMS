@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class AppUserBean {
-	
+
 	String userId;
 	String password;
-	
+
 	String firstName;
 	String lastName;
 	String active;
@@ -27,6 +27,8 @@ public class AppUserBean {
 	Date dob;
 	// Diagnoses
 	ArrayList<DiseaseBean> diseaseInfo;
+	// Patient Observations
+	ArrayList<UserObservationBean> patientObservations;
 	//Alerts
 	ArrayList<AlertBean> alerts;
 	// alerts for patients
@@ -39,7 +41,7 @@ public class AppUserBean {
 	String shsUserId;
 	String shsUserIdName;
 	Date shsAuthorizationDate;
-	
+
 	public ArrayList<AlertBean> getAlerts() {
 		return alerts;
 	}
@@ -60,12 +62,13 @@ public class AppUserBean {
 		diseaseInfo = new ArrayList<DiseaseBean>();
 		alerts = new ArrayList<AlertBean>();
 		patientAlerts = new ArrayList<AlertBean>();
+		patientObservations = new ArrayList<UserObservationBean>();
 	}
 
 	public String getUserId() {
 		return userId;
 	}
-	
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
@@ -77,7 +80,7 @@ public class AppUserBean {
 	public void setActive(String active) {
 		this.active = active;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
@@ -85,7 +88,7 @@ public class AppUserBean {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getFirstName() {
 		return firstName;
 	}
@@ -229,8 +232,11 @@ public class AppUserBean {
 	public void setShsAuthorizationDate(Date shsAuthorizationDate) {
 		this.shsAuthorizationDate = shsAuthorizationDate;
 	}
-	
-	
-	
-	
+	public ArrayList<UserObservationBean> getPatientObservations() {
+		return patientObservations;
+	}
+
+	public void setPatientObservations(ArrayList<UserObservationBean> patientObservations) {
+		this.patientObservations = patientObservations;
+	}	
 }

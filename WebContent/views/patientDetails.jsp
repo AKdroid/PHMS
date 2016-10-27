@@ -76,7 +76,7 @@
 						<% if(patientDetails.getObservation().isBPAvailable()) { %>
 						<tr>
 							<td>Blood Pressure</td>
-							<td><%=patientDetails.getObservation().getSystolic() + "-" + patientDetails.getObservation().getDiastolic()  %></td>
+							<td><%=patientDetails.getObservation().getDiastolic() + "-" + patientDetails.getObservation().getSystolic()  %></td>
 					        <td><%=sdf.format(patientDetails.getObservation().getBpDate()) %></td>
 				      	</tr>
 						<% } %>

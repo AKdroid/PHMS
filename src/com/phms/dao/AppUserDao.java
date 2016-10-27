@@ -14,6 +14,7 @@ import com.phms.beans.DiseaseBean;
 import com.phms.beans.ObservationBean;
 import com.phms.beans.PatientDetailsBean;
 import com.phms.beans.RecommendationBean;
+import com.phms.beans.UserObservationBean;
 import com.phms.utils.DBConnection;
 
 public class AppUserDao {
@@ -89,6 +90,8 @@ public class AppUserDao {
 					appUser.setShsUserIdName(cs.getString(11)+ " " + cs.getString(12));
 				if(cs.getString(13) != null && !cs.getString(13).trim().equalsIgnoreCase(""))
 					appUser.setShsAuthorizationDate(sdf.parse(cs.getString(9)));
+				fetchObservations(appUser);
+				
 			}
 			catch(Exception e)
 			{
@@ -645,6 +648,121 @@ public class AppUserDao {
 			result = conn.rollback();
 		}
 		return result;
+	}
+	
+	public void fetchObservations(AppUserBean ubean){
+		String query = "";
+		DBConnection conn = DBConnection.getConnection();
+		//boolean result = true;
+		query = "SELECT * FROM PATIENT_WEIGHTS WHERE IS_ACTIVE='Active' AND USER_ID = '"+ ubean.getUserId()+"'";
+		ResultSet rs = conn.executeQuery(query);
+		try{
+			if(rs != null){
+				while(rs.next()){
+					UserObservationBean obean = new UserObservationBean();
+					obean.setObsType("Weight");
+					obean.setObsId(rs.getString("OBSERVATION_ID"));
+					obean.setObsValue(rs.getString("VALUE"));
+					obean.setObsTime(rs.getString("OBSERVATION_TIME"));
+					ubean.getPatientObservations().add(obean);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		query = "SELECT * FROM PATIENT_TEMPERATURES WHERE IS_ACTIVE='Active' AND USER_ID = '"+ ubean.getUserId()+"'";
+		rs = conn.executeQuery(query);
+		try{
+			if(rs != null){
+				while(rs.next()){
+					UserObservationBean obean = new UserObservationBean();
+					obean.setObsType("Temperature");
+					obean.setObsId(rs.getString("OBSERVATION_ID"));
+					obean.setObsValue(rs.getString("VALUE"));
+					obean.setObsTime(rs.getString("OBSERVATION_TIME"));
+					ubean.getPatientObservations().add(obean);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		query = "SELECT * FROM PATIENT_BPS WHERE IS_ACTIVE='Active' AND USER_ID = '"+ ubean.getUserId()+"'";
+		rs = conn.executeQuery(query);
+		try{
+			if(rs != null){
+				while(rs.next()){
+					UserObservationBean obean = new UserObservationBean();
+					obean.setObsType("BP");
+					obean.setObsId(rs.getString("OBSERVATION_ID"));
+					obean.setObsValue(rs.getString("DIASTOLIC_VALUE")+"-"+rs.getString("SYSTOLIC_VALUE"));
+					obean.setObsTime(rs.getString("OBSERVATION_TIME"));
+					ubean.getPatientObservations().add(obean);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+
+		query = "SELECT * FROM PATIENT_MOODS WHERE IS_ACTIVE='Active' AND USER_ID = '"+ ubean.getUserId()+"'";
+		rs = conn.executeQuery(query);
+		String moods[] = {"Happy","Neutral","Sad"};
+		try{
+			if(rs != null){
+				while(rs.next()){
+					UserObservationBean obean = new UserObservationBean();
+					obean.setObsType("BP");
+					obean.setObsId(rs.getString("OBSERVATION_ID"));
+					obean.setObsValue(moods[rs.getInt("MOOD_VALUE")]);
+					obean.setObsTime(rs.getString("OBSERVATION_TIME"));
+					ubean.getPatientObservations().add(obean);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		query = "SELECT * FROM PATIENT_OXYGEN_SATURATIONS WHERE IS_ACTIVE='Active' AND USER_ID = '"+ ubean.getUserId()+"'";
+		rs = conn.executeQuery(query);
+		try{
+			if(rs != null){
+				while(rs.next()){
+					UserObservationBean obean = new UserObservationBean();
+					obean.setObsType("SPO2 Level");
+					obean.setObsId(rs.getString("OBSERVATION_ID"));
+					obean.setObsValue(rs.getString("SPO2_LEVEL_VALUE"));
+					obean.setObsTime(rs.getString("OBSERVATION_TIME"));
+					ubean.getPatientObservations().add(obean);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		query = "SELECT * FROM PATIENT_PAINS WHERE IS_ACTIVE='Active' AND USER_ID = '"+ ubean.getUserId()+"'";
+		rs = conn.executeQuery(query);
+		try{
+			if(rs != null){
+				while(rs.next()){
+					UserObservationBean obean = new UserObservationBean();
+					obean.setObsType("Pain");
+					obean.setObsId(rs.getString("OBSERVATION_ID"));
+					obean.setObsValue(rs.getString("VALUE"));
+					obean.setObsTime(rs.getString("OBSERVATION_TIME"));
+					ubean.getPatientObservations().add(obean);
+				}
+			}
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

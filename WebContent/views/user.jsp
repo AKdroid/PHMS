@@ -3,6 +3,7 @@
 <%@ page import="com.phms.beans.DiseaseBean" %>
 <%@ page import="com.phms.beans.AppUserBasicBean" %>
 <%@ page import="com.phms.beans.AlertBean" %>
+<%@ page import="com.phms.beans.UserObservationBean" %>
 <%@ page import="java.util.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html ng-app="">
@@ -78,12 +79,12 @@
 			<div class="tab-content">
 				<% if(appUserBean.isPatient()) { %>
 			  	<div id="patient" class="tab-pane fade <%if(appUserBean.isPatient() && hspage == null) { %> in active <% } %>">
-			  		<% if(appUserBean.getDiseaseInfo().size() > 0) { %>
 			    	<div class="row">
 						<div class="col-md-3">
 							<label>Diagnosis</label> 
 						</div>
 					</div>
+					<% if(appUserBean.getDiseaseInfo().size() > 0) { %>
 					<table class="table table-hover">
 					    <thead>
 					      <tr>
@@ -100,11 +101,40 @@
 						<% } %>
 						<tbody>
 					</table>
+					<% } else { %>
+						<span> You look fit and fine. </span>
 					<% } %>
 					<%if (appUserBean.getActive().equals("Active")){ %>
 					<div class="row">
 						<div class="col-md-3">
 							<label>Observations</label> 
+						</div>
+					</div>
+					<% if(appUserBean.getPatientObservations().size() > 0) { %>
+					<table class="table table-hover">
+					    <thead>
+					      <tr>
+					        <th>Observation Type</th>
+					        <th>Observation Value</th>
+					        <th>Observation Time</th>
+					      </tr>
+					    </thead>
+						<tbody>
+						<% for(UserObservationBean obsBean : appUserBean.getPatientObservations()) { %>
+						<tr>
+					        <td><%=obsBean.getObsType()%></td>
+					        <td><%=obsBean.getObsValue()%></td>
+					        <td><%=obsBean.getObsTime()%></td>
+				      	</tr>
+						<% } %>
+						<tbody>
+					</table>
+					<% } else { %>
+					<span> No observation available. </span>
+					<% } %>
+					<div class="row">
+						<div class="col-md-3">
+							<label>Add new Observation</label> 
 						</div>
 					</div>
 					<% if(message != null) { %>

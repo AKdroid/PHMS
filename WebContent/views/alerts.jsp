@@ -16,22 +16,22 @@
 	</head>
 	<body>
 		<div ng-include="'views/header.html'"></div>
-		<form method='POST' action="./login">
-			<input type="hidden" name="userId" id="userId" value="<%=appUserBean.getUserId() %>"/>
-			<input type="hidden" name="page" id="page" value="details"/>
-			<div class="col-md-9">
+		<div class="row">
+			<div class="col-md-8">
 			</div>
-			<div class="col-md-3">
-				<button type="submit" class="btn btn-primary">Back</button>
+			<div class="col-md-2">
+				<form method='POST' action="./login">
+					<input type="hidden" name="userId" id="userId" value="<%=appUserBean.getUserId() %>"/>
+					<input type="hidden" name="page" id="page" value="details"/>
+					<button type="submit" class="btn btn-primary">Back</button>
+				</form>
 			</div>
-		</form>
-		<form method='POST' action="./logout">
-			<div class="col-md-9">
+			<div class="col-md-2">
+				<form method='POST' action="./logout">
+					<button type="submit" class="btn btn-primary">Logout</button>
+				</form>
 			</div>
-			<div class="col-md-3">
-				<button type="submit" class="btn btn-primary">Logout</button>
-			</div>
-		</form>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">

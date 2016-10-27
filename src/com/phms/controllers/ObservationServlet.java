@@ -88,7 +88,6 @@ public class ObservationServlet extends HttpServlet
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			response.getWriter().append("Error");
 		}
 	}
 

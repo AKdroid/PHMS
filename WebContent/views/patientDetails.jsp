@@ -18,13 +18,15 @@
 	<body>
 		<div ng-include="'views/header.html'"></div>
 		<div class="row">
-			<div class="col-md-9">
+			<div class="col-md-8">
 			</div>
-			<div class="col-md-3">
+			<div class="col-md-2">
 				<form method='POST' action="./viewDetails">
 					<input type="hidden" name="userId" id="userId" value="<%=supporterId %>"/>
 					<button type="submit" class="btn btn-primary">Back</button>
 				</form>
+			</div>
+			<div class="col-md-2">
 				<form method='POST' action="./logout">
 					<button type="submit" class="btn btn-primary">Logout</button>
 				</form>

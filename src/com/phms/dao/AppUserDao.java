@@ -206,7 +206,7 @@ public class AppUserDao {
 	}
 
 	public boolean addHealthSupporter(AppUserBean ubean){
-		boolean result = false;
+		boolean result = true;
 		String query;
 		DBConnection conn = DBConnection.getConnection();
 		if(ubean.getPhsUserId()!=null){
@@ -220,6 +220,10 @@ public class AppUserDao {
 				+ ubean.getUserId()+"','"
 				+ ubean.getShsUserId()+"','"
 				+ convertDateToString(ubean.getShsAuthorizationDate())+"',0,'Active')";
+				result = result & conn.executeUpdate(query);
+			}
+			if(result){
+				query = "UPDATE APP_USERS SET IS_ACTIVE = 'Active' WHERE USER_ID = '"+ubean.getUserId()+"'"; 
 				result = result & conn.executeUpdate(query);
 			}
 		}

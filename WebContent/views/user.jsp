@@ -23,21 +23,21 @@
 	</head>
 	<body>
 		<div ng-include="'views/header.html'"></div>
-		<form method='POST' action="./logout">
-				<div class="col-md-9">
-				</div>
-				<div class="col-md-3">
-					<button type="submit" class="btn btn-primary">Logout</button>
-				</div>
-		</form>
-		<form method='POST' action="./viewAlerts">
-				<input type="hidden" name="userId" id="userId" value="<%=appUserBean.getUserId() %>"/>
-				<div class="col-md-9">
-				</div>
-				<div class="col-md-3">
+		<div class="row">
+			<div class="col-md-8">
+			</div>
+			<div class="col-md-2">
+				<form method='POST' action="./viewAlerts">
+					<input type="hidden" name="userId" id="userId" value="<%=appUserBean.getUserId() %>"/>
 					<button type="submit" class="btn btn-primary <%if(appUserBean.getAlerts().size() == 0) {%> disabled <% } %>">Alerts (<%=appUserBean.getAlerts().size()%>)</button>
-				</div>
-		</form>
+				</form>
+			</div>
+			<div class="col-md-2">
+				<form method='POST' action="./logout">
+					<button type="submit" class="btn btn-primary">Logout</button>
+				</form>
+			</div>
+		</div>
 		<div class="container">
 			<ul class="nav nav-tabs">
 				<% if(appUserBean.isPatient()) { %>
@@ -273,6 +273,9 @@
 									<input type="date" name = "shsAd" class="form-control" id="shsAd" placeholder="Secondary Health Supporter Authorization Date"/>
 								</div>
 							</div>
+							</div>
+							<div class="col-md-12">
+								<button type="submit" class="btn btn-primary" >Add Supporters</button>
 							</div>
 						</form>
 					<% } %>
